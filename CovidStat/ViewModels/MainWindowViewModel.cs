@@ -1,15 +1,12 @@
 ﻿using CovidStat.Models;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CovidStat.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly string API_URL = @"https://coronavirus-19-api.herokuapp.com/";
         private CountryStat _currentCountry;
         private List<CountryStat> countryList;
 
