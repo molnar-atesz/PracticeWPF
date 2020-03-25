@@ -1,0 +1,81 @@
+﻿<Window x:Class="CovidStat.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CovidStat"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="450"
+        Width="800"
+        Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
+        <Label Content="COVID Statistics"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               FontWeight="Bold"
+               FontSize="24" />
+        <StackPanel Grid.Row="1"
+                    VerticalAlignment="Center"
+                    DataContext="{Binding CurrentCountry}">
+            <WrapPanel HorizontalAlignment="Left">
+                <Label Content="Country:"
+                       Grid.Row="1" />
+                <TextBox MinWidth="200"
+                         Text="{Binding Country}" />
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Left">
+                <Label Content="Cases:"
+                       Grid.Row="1" />
+                <TextBox MinWidth="200"
+                         Text="{Binding Cases}" />
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Left">
+                <Label Content="Today Cases:"
+                       Grid.Row="1" />
+                <TextBox MinWidth="200"
+                         Text="{Binding TodayCases}" />
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Left">
+                <Label Content="Recovered:"
+                       Grid.Row="1" />
+                <TextBox MinWidth="200"
+                         Text="{Binding Recovered}" />
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Left">
+                <Label Content="Deaths:"
+                       Grid.Row="1" />
+                <TextBox MinWidth="200"
+                         Text="{Binding Deaths}" />
+            </WrapPanel>
+
+        </StackPanel>
+        <ListView Grid.Row="2"
+                  ItemsSource="{Binding CountryList}"
+                  SelectedItem="{Binding CurrentCountry}">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Label MinWidth="200"
+                               Content="{Binding Country}" />
+                        <Label MinWidth="10"
+                               Content="{Binding Cases}" />
+                        <Label MinWidth="10"
+                               Content="{Binding TodayCases}" />
+                        <Label MinWidth="10"
+                               Content="{Binding Recovered}" />
+                        <Label MinWidth="10"
+                               Content="{Binding Deaths}" />
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Window>
