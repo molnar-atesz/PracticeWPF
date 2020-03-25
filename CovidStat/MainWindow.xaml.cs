@@ -33,7 +33,7 @@ namespace CovidStat
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            await _vm.LoadCountries();
+            await _vm.Refresh();
             _vm.SelectCountry("Hungary");
         }
 

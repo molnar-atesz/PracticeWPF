@@ -1,15 +1,13 @@
 ﻿using CovidStat.Models;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CovidStat.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBase
     {
         private readonly string API_URL = @"https://coronavirus-19-api.herokuapp.com/";
         private CountryStat _currentCountry;
@@ -21,7 +19,7 @@ namespace CovidStat.ViewModels
             set
             {
                 _currentCountry = value;
-                OnPropertyChanged(nameof(CurrentCountry));
+                OnPropertyChanged();
             }
         }
 
@@ -31,7 +29,7 @@ namespace CovidStat.ViewModels
             set
             {
                 countryList = value;
-                OnPropertyChanged(nameof(CountryList));
+                OnPropertyChanged();
             }
         }
 
@@ -45,21 +43,10 @@ namespace CovidStat.ViewModels
             CurrentCountry = CountryList.Where(stat => stat.Country == countryName).FirstOrDefault();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string propName)
+        public async Task Refresh()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
-        public async Task LoadCountries()
-        {
-            var client = new HttpClient();
-            string requestUri = $"{API_URL}countries";
-            var data = await client.GetAsync(requestUri);
-            var stats = await data.Content.ReadAsStringAsync().ConfigureAwait(true);
-
-            CountryList = JsonConvert.DeserializeObject<List<CountryStat>>(stats);
+           var service = new CovidDataService();
+            CountryList = await service.LoadCountries();
         }
     }
 }
